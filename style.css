@@ -1,0 +1,73 @@
+body{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  
+}
+
+canvas{
+  margin:auto;
+}
+
+h1 {
+  justify-content: center;
+  display: flex;
+}
+
+.ba{
+  justify-content: center;
+  display: flex;
+}
+
+.bo{
+  justify-content: center;
+  display: flex;
+  margin: 0px;
+
+}
+.snakestyle{
+  justify-content: center;
+  display: flex;
+}
+
+
+.bo button{
+  border: none;
+  color: white;
+  background-color: #4CAF50;
+  padding: 0px 10px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  height: 4vh;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.bo button:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+      
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown-content {
+  display: none;
+  background-color: #f1f1f1;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
