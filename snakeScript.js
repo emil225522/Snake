@@ -1,3 +1,4 @@
+document.addEventListener("keydown", change_direction)
 
 const board_border = 'black';
 const board_background = "lightgray";
@@ -5,22 +6,29 @@ const snake_col = 'green';
 const snake_border = 'black';
 const board = document.getElementById("gameCanvas");
 const board_ctx = gameCanvas.getContext("2d");
+
+
+const KEY_LEFT = 37;
+const KEY_UP = 38;
+const KEY_RIGHT = 39;
+const KEY_DOWN = 40;
+
 var gridSize = 20;
 var updateTime = 100;
 
 let snake = [
     { x: 200, y: 200 },
     { x: 200 - gridSize, y: 200 },
-    { x: 200 - gridSize*2, y: 200 },
-    { x: 200 - gridSize*3, y: 200 },
-    { x: 200 - gridSize*4, y: 200 }
+    { x: 200 - gridSize * 2, y: 200 },
+    { x: 200 - gridSize * 3, y: 200 },
+    { x: 200 - gridSize * 4, y: 200 }
 ]
 
 let dx = 20;
 let dy = 0;
 main();
 
-// main function called repeatedly to keep the game running
+// main game loop that gets called with interval 'updateTime'
 function main() {
     setTimeout(function onTick() {
         clearCanvas();
@@ -28,13 +36,40 @@ function main() {
         draw();
         main();
     }, updateTime)
-    updateTime = snake.length*5 + 50;
+    updateTime = snake.length * 5 + 50;
 }
 function move() {
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
     snake.pop();
 }
+
+
+//keypresses
+function change_direction(event) {
+    const keyPressed = event.keyCode;
+    
+    if (keyPressed == KEY_LEFT && dx != 20) {
+        dx = -20;
+        dy = 0;
+    }
+    if (keyPressed == KEY_RIGHT && dx != -20) {
+        dx = 20;
+        dy = 0;
+    }
+    if (keyPressed == KEY_UP && dy != 20) {
+        dx = 0;
+        dy = -20;
+    }
+    if (keyPressed == KEY_DOWN && dy != -20) {
+        dx = 0;
+        dy = 20;
+    }
+
+
+
+
+};
 
 
 // draw a border around the canvas
