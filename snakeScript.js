@@ -84,19 +84,19 @@ function change_direction(event) {
     const keyPressed = event.keyCode;
     if (!hasTurned) {
         hasTurned = true;
-        if (keyPressed == KEY_LEFT || keyPressed == KEY_A && dx != gridSize) {
+        if ((keyPressed == KEY_LEFT || keyPressed == KEY_A )&& dx != gridSize) {
             dx = -gridSize;
             dy = 0;
         }
-        else if (keyPressed == KEY_RIGHT || keyPressed == KEY_D && dx != -gridSize) {
+        else if ((keyPressed == KEY_RIGHT || keyPressed == KEY_D) && dx != -gridSize) {
             dx = gridSize;
             dy = 0;
         }
-        else if (keyPressed == KEY_UP || keyPressed == KEY_W && dy != gridSize) {
+        else if ((keyPressed == KEY_UP || keyPressed == KEY_W) && dy != gridSize) {
             dx = 0;
             dy = -gridSize;
         }
-        else if (keyPressed == KEY_DOWN || keyPressed == KEY_S && dy != -gridSize) {
+        else if ((keyPressed == KEY_DOWN || keyPressed == KEY_S) && dy != -gridSize) {
             dx = 0;
             dy = gridSize;
         }
