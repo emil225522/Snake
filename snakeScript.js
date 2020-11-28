@@ -44,8 +44,6 @@ function init() {
     dy = 0;
 }
 
-
-
 init();
 main();
 
