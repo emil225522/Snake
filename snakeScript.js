@@ -19,6 +19,8 @@ const KEY_A = 65;
 const KEY_S = 83;
 const KEY_D = 68;
 
+hasTurned = false;
+
 let snake = 0;
 
 let dx = gridSize;
@@ -49,6 +51,7 @@ main();
 
 // main game loop that gets called with interval 'updateTime'
 function main() {
+    hasTurned = false;
     setTimeout(function onTick() {
         if (gameOver()) {
             waitForReset();
@@ -61,7 +64,7 @@ function main() {
         }
     }, updateTime)
 
-    updateTime = 150 - snake.length*2;
+    updateTime = 150 - snake.length * 2;
 }
 function move() {
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
@@ -79,24 +82,25 @@ function move() {
 //keypresses
 function change_direction(event) {
     const keyPressed = event.keyCode;
-
-    if (keyPressed == KEY_LEFT || keyPressed == KEY_A && dx != gridSize) {
-        dx = -gridSize;
-        dy = 0;
+    if (!hasTurned) {
+        hasTurned = true;
+        if (keyPressed == KEY_LEFT || keyPressed == KEY_A && dx != gridSize) {
+            dx = -gridSize;
+            dy = 0;
+        }
+        else if (keyPressed == KEY_RIGHT || keyPressed == KEY_D && dx != -gridSize) {
+            dx = gridSize;
+            dy = 0;
+        }
+        else if (keyPressed == KEY_UP || keyPressed == KEY_W && dy != gridSize) {
+            dx = 0;
+            dy = -gridSize;
+        }
+        else if (keyPressed == KEY_DOWN || keyPressed == KEY_S && dy != -gridSize) {
+            dx = 0;
+            dy = gridSize;
+        }
     }
-    if (keyPressed == KEY_RIGHT || keyPressed == KEY_D && dx != -gridSize) {
-        dx = gridSize;
-        dy = 0;
-    }
-    if (keyPressed == KEY_UP || keyPressed == KEY_W && dy != gridSize) {
-        dx = 0;
-        dy = -gridSize;
-    }
-    if (keyPressed == KEY_DOWN || keyPressed == KEY_S && dy != -gridSize) {
-        dx = 0;
-        dy = gridSize;
-    }
-
 
 
 
