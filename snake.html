@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Game</title>
+  <title>Snake</title>
   <link rel="stylesheet" type="text/css" href="s.css">
 
 <body style="background-color:grey;">
@@ -10,13 +10,15 @@
   </head>
 
   <body>
-    <button onclick="window.location.href='https://emil225522.github.io';">
-      Back to main page
-    </button>
 
+    <div class="info">
+      <button onclick="window.location.href='https://emil225522.github.io';">
+        Back to main page
+      </button>
 
+    </div>
       <div class="snakestyle">
-
+        <div id="score">0</div>
         <canvas id="gameCanvas" width="800" height="800"><canvas>
             <script src="snakeScript.js"></script>
 

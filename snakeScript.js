@@ -21,6 +21,7 @@ const KEY_D = 68;
 
 hasTurned = false;
 
+let score = 0;
 let snake = 0;
 
 let dx = gridSize;
@@ -39,9 +40,9 @@ function init() {
         { x: 200 - gridSize * 3, y: 400 },
         { x: 200 - gridSize * 4, y: 400 }
     ]
-
-
     spawnApple();
+    score = 0;
+    document.getElementById("score").innerHTML = score;
     dx = gridSize;
     dy = 0;
 }
@@ -51,12 +52,13 @@ main();
 
 // main game loop that gets called with interval 'updateTime'
 function main() {
-    hasTurned = false;
+
     setTimeout(function onTick() {
         if (gameOver()) {
             waitForReset();
         }
         else {
+            hasTurned = false;
             clearCanvas();
             move();
             draw();
@@ -64,14 +66,15 @@ function main() {
         }
     }, updateTime)
 
-    updateTime = 150 - snake.length * 2;
+    updateTime = 150 - snake.length * 1;
 }
 function move() {
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
-    console.log(head.x + "   " + head.y);
     snake.unshift(head);
     if (head.x == appleX && head.y == appleY) {
         spawnApple();
+        score+=10;
+        document.getElementById("score").innerHTML = score;
     }
     else {
         snake.pop();
@@ -82,27 +85,29 @@ function move() {
 //keypresses
 function change_direction(event) {
     const keyPressed = event.keyCode;
-    if (!hasTurned) {
-        hasTurned = true;
+    if (event.repeat == false && hasTurned == false) {
+
         if ((keyPressed == KEY_LEFT || keyPressed == KEY_A )&& dx != gridSize) {
             dx = -gridSize;
             dy = 0;
+            hasTurned = true;
         }
         else if ((keyPressed == KEY_RIGHT || keyPressed == KEY_D) && dx != -gridSize) {
             dx = gridSize;
             dy = 0;
+            hasTurned = true;
         }
         else if ((keyPressed == KEY_UP || keyPressed == KEY_W) && dy != gridSize) {
             dx = 0;
             dy = -gridSize;
+            hasTurned = true;
         }
         else if ((keyPressed == KEY_DOWN || keyPressed == KEY_S) && dy != -gridSize) {
             dx = 0;
             dy = gridSize;
+            hasTurned = true;
         }
     }
-
-
 
 };
 
