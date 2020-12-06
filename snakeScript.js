@@ -1,4 +1,5 @@
 document.addEventListener("keydown", change_direction)
+document.addEventListener("keyup", change)
 
 const board_border = 'black';
 const board_background = "lightgray";
@@ -20,6 +21,13 @@ const KEY_S = 83;
 const KEY_D = 68;
 
 hasTurned = false;
+
+const LEFT = 0;
+const RIGHT = 1;
+const UP = 2;
+const DOWN = 3;
+
+let direction = RIGHT;
 
 let score = 0;
 let snake = 0;
@@ -43,6 +51,7 @@ function init() {
     spawnApple();
     score = 0;
     document.getElementById("score").innerHTML = score;
+    direction = RIGHT;
     dx = gridSize;
     dy = 0;
 }
@@ -69,11 +78,29 @@ function main() {
     updateTime = 150 - snake.length * 1;
 }
 function move() {
+
+    if (direction == LEFT) {
+        dx = -gridSize;
+        dy = 0;
+    }
+    else if (direction == RIGHT) {
+        dx = gridSize;
+        dy = 0;
+    }
+    else if (direction == UP) {
+        dx = 0;
+        dy = -gridSize;
+    }
+    else if (direction == DOWN) {
+        dx = 0;
+        dy = gridSize;
+    }
+
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
     if (head.x == appleX && head.y == appleY) {
         spawnApple();
-        score+=10;
+        score += 10;
         document.getElementById("score").innerHTML = score;
     }
     else {
@@ -85,31 +112,43 @@ function move() {
 //keypresses
 function change_direction(event) {
     const keyPressed = event.keyCode;
-    if (event.repeat == false && hasTurned == false) {
+    console.log(hasTurned + " event");
+    if (event.repeat == false) {
 
-        if ((keyPressed == KEY_LEFT || keyPressed == KEY_A )&& dx != gridSize) {
-            dx = -gridSize;
-            dy = 0;
+        if ((keyPressed == KEY_LEFT || keyPressed == KEY_A) && dx != gridSize) {
+            direction = LEFT;
             hasTurned = true;
         }
         else if ((keyPressed == KEY_RIGHT || keyPressed == KEY_D) && dx != -gridSize) {
-            dx = gridSize;
-            dy = 0;
+            direction = RIGHT;
             hasTurned = true;
         }
         else if ((keyPressed == KEY_UP || keyPressed == KEY_W) && dy != gridSize) {
-            dx = 0;
-            dy = -gridSize;
+            direction = UP;
             hasTurned = true;
         }
         else if ((keyPressed == KEY_DOWN || keyPressed == KEY_S) && dy != -gridSize) {
-            dx = 0;
-            dy = gridSize;
+            direction = DOWN;
             hasTurned = true;
         }
     }
 
-};
+}
+function change(event) {
+    const keyPressed = event.keyCode;
+    if (keyPressed == KEY_LEFT) {
+        hasTurned = false;
+    }
+    else if (keyPressed == KEY_RIGHT) {
+        hasTurned = false;
+    }
+    else if (keyPressed == KEY_UP) {
+        hasTurned = false;
+    }
+    else if (keyPressed == KEY_DOWN) {
+        hasTurned = false;
+    }
+}
 
 function gameOver() {
 
@@ -140,7 +179,21 @@ function drawSnakePart(snakePart) {
     board_ctx.strokestyle = 'darkblue';
     board_ctx.fillRect(snakePart.x, snakePart.y, gridSize, gridSize);
     board_ctx.strokeRect(snakePart.x, snakePart.y, gridSize, gridSize);
+    if (snakePart.x == snake[0].x && snakePart.y == snake[0].y) {
+        board_ctx.fillStyle = 'black';
+        board_ctx.strokestyle = 'purple';
+        if (direction == LEFT || direction == RIGHT) {
+            board_ctx.fillRect(snakePart.x + 20, snakePart.y + 12, 5, 5);
+            board_ctx.fillRect(snakePart.x + 20, snakePart.y + 22, 5, 5);
+        }
+        else {
+            board_ctx.fillRect(snakePart.x + 12, snakePart.y + 20, 5, 5);
+            board_ctx.fillRect(snakePart.x + 22, snakePart.y + 20, 5, 5);
+        }
+
+    }
 }
+
 function drawApple() {
     board_ctx.fillStyle = 'red';
     board_ctx.strokestyle = 'red';
