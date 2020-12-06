@@ -1,5 +1,4 @@
 document.addEventListener("keydown", change_direction)
-document.addEventListener("keyup", change)
 
 const board_border = 'black';
 const board_background = "lightgray";
@@ -20,8 +19,6 @@ const KEY_A = 65;
 const KEY_S = 83;
 const KEY_D = 68;
 
-hasTurned = false;
-
 const LEFT = 0;
 const RIGHT = 1;
 const UP = 2;
@@ -39,6 +36,8 @@ let appleX = 100;
 let appleY = 200;
 var gridSize = 40;
 var updateTime = 100;
+var particles = [];
+
 
 function init() {
     snake = [
@@ -50,6 +49,7 @@ function init() {
     ]
     spawnApple();
     score = 0;
+    particles = [];
     document.getElementById("score").innerHTML = score;
     direction = RIGHT;
     dx = gridSize;
@@ -61,13 +61,15 @@ main();
 
 // main game loop that gets called with interval 'updateTime'
 function main() {
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].move();
+    }
 
     setTimeout(function onTick() {
         if (gameOver()) {
             waitForReset();
         }
         else {
-            hasTurned = false;
             clearCanvas();
             move();
             draw();
@@ -78,6 +80,7 @@ function main() {
     updateTime = 150 - snake.length * 1;
 }
 function move() {
+
 
     if (direction == LEFT) {
         dx = -gridSize;
@@ -99,9 +102,15 @@ function move() {
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
     if (head.x == appleX && head.y == appleY) {
+        for (let i = 0; i < 100; i++) {
+            particles[i] = new Particle(appleX+gridSize/2,appleY+gridSize/2);
+            
+        }
         spawnApple();
         score += 10;
         document.getElementById("score").innerHTML = score;
+
+        
     }
     else {
         snake.pop();
@@ -112,43 +121,25 @@ function move() {
 //keypresses
 function change_direction(event) {
     const keyPressed = event.keyCode;
-    console.log(hasTurned + " event");
     if (event.repeat == false) {
 
         if ((keyPressed == KEY_LEFT || keyPressed == KEY_A) && dx != gridSize) {
             direction = LEFT;
-            hasTurned = true;
         }
         else if ((keyPressed == KEY_RIGHT || keyPressed == KEY_D) && dx != -gridSize) {
             direction = RIGHT;
-            hasTurned = true;
+
         }
         else if ((keyPressed == KEY_UP || keyPressed == KEY_W) && dy != gridSize) {
             direction = UP;
-            hasTurned = true;
         }
         else if ((keyPressed == KEY_DOWN || keyPressed == KEY_S) && dy != -gridSize) {
             direction = DOWN;
-            hasTurned = true;
         }
     }
 
 }
-function change(event) {
-    const keyPressed = event.keyCode;
-    if (keyPressed == KEY_LEFT) {
-        hasTurned = false;
-    }
-    else if (keyPressed == KEY_RIGHT) {
-        hasTurned = false;
-    }
-    else if (keyPressed == KEY_UP) {
-        hasTurned = false;
-    }
-    else if (keyPressed == KEY_DOWN) {
-        hasTurned = false;
-    }
-}
+
 
 function gameOver() {
 
@@ -182,6 +173,7 @@ function drawSnakePart(snakePart) {
     if (snakePart.x == snake[0].x && snakePart.y == snake[0].y) {
         board_ctx.fillStyle = 'black';
         board_ctx.strokestyle = 'purple';
+        
         if (direction == LEFT || direction == RIGHT) {
             board_ctx.fillRect(snakePart.x + 20, snakePart.y + 12, 5, 5);
             board_ctx.fillRect(snakePart.x + 20, snakePart.y + 22, 5, 5);
@@ -206,7 +198,13 @@ function draw() {
 
     snake.forEach(drawSnakePart);
     drawApple();
+for (let i = 0; i < particles.length; i++) {
+    board_ctx.fillStyle = 'red';
+    console.log(particles[i].getX());
+    board_ctx.fillRect(particles[i].getX(),particles[i].getY(),2,2);
 }
+}
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
