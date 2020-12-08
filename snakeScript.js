@@ -36,7 +36,8 @@ let appleX = 100;
 let appleY = 200;
 var gridSize = 40;
 var updateTime = 100;
-var particles = [];
+var explosions = [];
+var updateCounter = 0;
 
 
 function init() {
@@ -49,7 +50,7 @@ function init() {
     ]
     spawnApple();
     score = 0;
-    particles = [];
+    explosions = [];
     document.getElementById("score").innerHTML = score;
     direction = RIGHT;
     dx = gridSize;
@@ -61,23 +62,25 @@ main();
 
 // main game loop that gets called with interval 'updateTime'
 function main() {
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].move();
+    updateCounter++;
+    for (let i = 0; i < explosions.length; i++) {
+        explosions[i].update();
     }
 
-    setTimeout(function onTick() {
-        if (gameOver()) {
-            waitForReset();
-        }
-        else {
-            clearCanvas();
-            move();
-            draw();
-            main();
-        }
-    }, updateTime)
+        setTimeout(function onTick() {
+            if (isGameOver()) {
+                waitForReset();
+            }
+            else {
+                clearCanvas();
+                move();
+                draw();
+                main();
+            }
+        }, updateTime)
 
-    updateTime = 150 - snake.length * 1;
+        updateTime = 150 - snake.length * 1;
+    
 }
 function move() {
 
@@ -102,15 +105,12 @@ function move() {
     var head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
     if (head.x == appleX && head.y == appleY) {
-        for (let i = 0; i < 100; i++) {
-            particles[i] = new Particle(appleX+gridSize/2,appleY+gridSize/2);
-            
-        }
+            explosions.push(new Explosion(appleX + gridSize / 2, appleY + gridSize / 2));
         spawnApple();
         score += 10;
         document.getElementById("score").innerHTML = score;
 
-        
+
     }
     else {
         snake.pop();
@@ -141,7 +141,7 @@ function change_direction(event) {
 }
 
 
-function gameOver() {
+function isGameOver() {
 
     for (let i = 1; i < snake.length; i++) {
         if (snake[i].x == snake[0].x && snake[i].y == snake[0].y) {
@@ -173,7 +173,7 @@ function drawSnakePart(snakePart) {
     if (snakePart.x == snake[0].x && snakePart.y == snake[0].y) {
         board_ctx.fillStyle = 'black';
         board_ctx.strokestyle = 'purple';
-        
+
         if (direction == LEFT || direction == RIGHT) {
             board_ctx.fillRect(snakePart.x + 20, snakePart.y + 12, 5, 5);
             board_ctx.fillRect(snakePart.x + 20, snakePart.y + 22, 5, 5);
@@ -198,11 +198,9 @@ function draw() {
 
     snake.forEach(drawSnakePart);
     drawApple();
-for (let i = 0; i < particles.length; i++) {
-    board_ctx.fillStyle = 'red';
-    console.log(particles[i].getX());
-    board_ctx.fillRect(particles[i].getX(),particles[i].getY(),2,2);
-}
+    for (let i = 0; i < explosions.length; i++) {
+        explosions[i].draw();
+    }
 }
 
 
