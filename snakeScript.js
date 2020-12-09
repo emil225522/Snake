@@ -125,6 +125,21 @@ function up(){
         direction = UP;
     }
 }
+function down(){
+    if ( dy != -gridSize) {
+        direction = DOWN;
+    }
+}
+function right(){
+    if ( dx != -gridSize) {
+        direction = RIGHT;
+    }
+}
+function left(){
+    if (dx != gridSize) {
+        direction = LEFT;
+    }
+}
 function change_direction(event) {
     const keyPressed = event.keyCode;
     if (event.repeat == false) {
