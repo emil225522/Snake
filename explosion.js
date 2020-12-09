@@ -7,7 +7,6 @@ class Explosion {
         this.particles = [];
         this.angle = 0;
         for (let i = 0; i < 360; i++) {
-            console.log(this.angle);
             this.angle = i;
             this.speed = getRnd(-30,30);
             this.dx = Math.cos(this.angle)*this.speed;
@@ -18,6 +17,8 @@ class Explosion {
     update() {
         for (let i = 0; i < this.particles.length; i++) {
             this.particles[i].move();
+        }
+        for (let i = 0; i < this.particles.length; i++) {
             if (this.particles[i].isDead == true)
             this.particles.splice(i,1);
         }
