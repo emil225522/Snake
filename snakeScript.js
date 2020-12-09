@@ -40,19 +40,19 @@ var explosions = [];
 var updateCounter = 0;
 
 document.addEventListener('swiped-left', function(e) {
-    alert(e.target); // the element that was swiped
+    console.log(e.target); // the element that was swiped
 });
 
 document.addEventListener('swiped-right', function(e) {
-    alert(e.target); // the element that was swiped
+    console.log(e.target); // the element that was swiped
 });
 
 document.addEventListener('swiped-up', function(e) {
-    alert(e.target); // the element that was swiped
+    console.log(e.target); // the element that was swiped
 });
 
 document.addEventListener('swiped-down', function(e) {
-    alert(e.target); // the element that was swiped
+    console.log(e.target); // the element that was swiped
 });
 
 
