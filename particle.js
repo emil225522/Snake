@@ -1,17 +1,20 @@
 class Particle {
 
-    constructor(x, y) {
+    constructor(x, y, dx, dy) {
         this.x = x;
         this.y = y;
-        this.speedX = getRndInteger(-20,20);
-        this.speedY = getRndInteger(-20,20);
+        this.dx = dx;
+        this.dy = dy;
+
         this.isDead = false;
+        this.aliveTimer = 0;
     }
 
     move() {
-        this.x+= this.speedX;
-        this.y+= this.speedY;
-        if (this.x > 800 || this.x < 0 || this.y > 800 | this.y < 0)
+        this.x+= this.dx;
+        this.y+= this.dy;
+        this.aliveTimer++;
+        if (this.x > 800 || this.x < 0 || this.y > 800 || this.y < 0 || this.aliveTimer > 5)
         this.isDead = true;
     }
     getX(){
@@ -20,9 +23,5 @@ class Particle {
     getY(){
         return this.y;
     }
-  }
-
-  function getRndInteger(min, max) {
-    return Math.random() * (max - min)  + min;
   }
   

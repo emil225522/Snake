@@ -5,12 +5,17 @@ class Explosion {
         this.x = x;
         this.y = y;
         this.particles = [];
-        for (let i = 0; i < 1000; i++) {
-            this.particles.push(new Particle(x,y));
+        this.angle = 0;
+        for (let i = 0; i < 360; i++) {
+            console.log(this.angle);
+            this.angle = i;
+            this.speed = getRnd(-30,30);
+            this.dx = Math.cos(this.angle)*this.speed;
+            this.dy = Math.sin(this.angle)*this.speed;
+            this.particles.push(new Particle(getRnd(x-20,x+20),getRnd(y-20,y+20),this.dx,this.dy));
         }
     }
     update() {
-        console.log(this.particles.length);
         for (let i = 0; i < this.particles.length; i++) {
             this.particles[i].move();
             if (this.particles[i].isDead == true)
@@ -30,3 +35,6 @@ class Explosion {
         }
     }
 }
+function getRnd(min, max) {
+    return Math.floor(Math.random() * (max - min)  + min);
+  }
