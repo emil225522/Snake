@@ -15,6 +15,7 @@ body{
   }
   .info{
     float: left;
+    justify-content: left;
   }
   #score{
     position: relative;
@@ -23,15 +24,19 @@ body{
     font-size: 50px;
 
   }
+
   
 
 
   button {
-    float: left;
     font-size: xx-large;
-    justify-content: left;
     text-decoration: none;
     background-color: lightblue;
+    z-index: 1;
+  }
+  #buttondiv{
+    position: relative;
+    left: 45%;
   }
 
   button:hover{

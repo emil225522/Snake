@@ -39,25 +39,6 @@ var updateTime = 100;
 var explosions = [];
 var updateCounter = 0;
 
-document.addEventListener('swiped-left', function(e) {
-    console.log(e.target); // the element that was swiped
-});
-
-document.addEventListener('swiped-right', function(e) {
-    console.log(e.target); // the element that was swiped
-});
-
-document.addEventListener('swiped-up', function(e) {
-    console.log(e.target); // the element that was swiped
-});
-
-document.addEventListener('swiped-down', function(e) {
-    console.log(e.target); // the element that was swiped
-});
-
-
-
-
 
 function init() {
     snake = [
@@ -138,6 +119,12 @@ function move() {
 
 
 //keypresses
+
+function up(){
+    if (dy != gridSize) {
+        direction = UP;
+    }
+}
 function change_direction(event) {
     const keyPressed = event.keyCode;
     if (event.repeat == false) {
@@ -147,7 +134,6 @@ function change_direction(event) {
         }
         else if ((keyPressed == KEY_RIGHT || keyPressed == KEY_D) && dx != -gridSize) {
             direction = RIGHT;
-
         }
         else if ((keyPressed == KEY_UP || keyPressed == KEY_W) && dy != gridSize) {
             direction = UP;
