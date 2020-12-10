@@ -4,7 +4,7 @@
 <head>
   <title>Snake</title>
   <link rel="stylesheet" type="text/css" href="s.css">
-
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
 <body style="background-color:grey;">
 
   </head>
@@ -33,12 +33,12 @@
       <div class="buttondiv1">
 
         <div>
-          <button ontouchstart="up()">↑</button>
+          <button ontouchstart="up()" onclick="up()">↑</button>
         </div>
         <div class = "buttondiv2">
-          <button ontouchstart="left()">←</button>
-          <button ontouchstart="down()">↓</button>
-          <button ontouchstart="right()">→</button>
+          <button ontouchstart="left()" onclick="left()">←</button>
+          <button ontouchstart="down()" onclick="down()">↓</button>
+          <button ontouchstart="right()"onclick="right()">→</button>
 
         </div>
       </div>
