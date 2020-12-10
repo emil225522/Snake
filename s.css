@@ -25,6 +25,7 @@ body{
 
   }
  button{
+  touch-action: manipulation;
   font-size: xx-large;
   text-decoration: none;
   background-color: lightblue;
