@@ -116,8 +116,6 @@ function move() {
         snake.pop();
     }
 }
-
-
 //keypresses
 
 function up(){
